@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import { COLORS } from '../../constants';
+import { COLORS, QUERIES } from '../../constants';
 
 import SearchInput from '../SearchInput';
 import UnstyledButton from '../UnstyledButton';
@@ -13,14 +13,26 @@ const SuperHeader = () => {
       <MarketingMessage>
         Free shipping on domestic orders over $75!
       </MarketingMessage>
-      <SearchInput />
+      <WrappedSearchInput />
       <HelpLink href="/help">Help</HelpLink>
-      <UnstyledButton>
+      <StyledButton>
         <Icon id="shopping-bag" strokeWidth={1} />
-      </UnstyledButton>
+      </StyledButton>
     </Wrapper>
   );
 };
+
+const StyledButton = styled(UnstyledButton)`
+    @media ${QUERIES.tabletAndSmaller} {
+        display: none;
+    }
+`;
+
+const WrappedSearchInput = styled(SearchInput)`
+    @media ${QUERIES.tabletAndSmaller} {
+        display: none;
+    }
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,11 +44,19 @@ const Wrapper = styled.div`
   height: 40px;
   padding-left: 32px;
   padding-right: 32px;
+
+  @media ${QUERIES.tabletAndSmaller} {
+    height: 4px;
+  }
 `;
 
 const MarketingMessage = styled.span`
   color: ${COLORS.white};
   margin-right: auto;
+
+  @media ${QUERIES.tabletAndSmaller} {
+    display: none;
+  }
 `;
 
 const HelpLink = styled.a`
@@ -46,6 +66,10 @@ const HelpLink = styled.a`
 
   &:not(:focus-visible) {
     outline: none;
+  }
+
+  @media ${QUERIES.tabletAndSmaller} {
+    display: none;
   }
 `;
 
