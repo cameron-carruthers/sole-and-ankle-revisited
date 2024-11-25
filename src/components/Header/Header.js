@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 
-import { COLORS, WEIGHTS } from '../../constants';
+import { COLORS, QUERIES, WEIGHTS } from '../../constants';
 import Logo from '../Logo';
 import SuperHeader from '../SuperHeader';
 import MobileMenu from '../MobileMenu';
+import Icon from '../Icon';
+import UnstyledButton from '../UnstyledButton';
+import VisuallyHidden from '../VisuallyHidden';
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -17,7 +20,7 @@ const Header = () => {
   return (
     <header>
       <SuperHeader />
-      <MainHeader>
+      <DesktopHeader>
         <Side>
           <Logo />
         </Side>
@@ -30,7 +33,25 @@ const Header = () => {
           <NavLink href="/collections">Collections</NavLink>
         </Nav>
         <Side />
-      </MainHeader>
+      </DesktopHeader>
+
+      <MobileHeader>
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
+        <UnstyledButton>
+          <Icon id="shopping-bag" strokeWidth={2} />
+        </UnstyledButton>
+        <VisuallyHidden>Open cart</VisuallyHidden>
+        <UnstyledButton>
+          <Icon id="search" strokeWidth={2} />
+        </UnstyledButton>
+        <VisuallyHidden>Search</VisuallyHidden>
+        <UnstyledButton>
+          <Icon id="menu" strokeWidth={2} />
+        </UnstyledButton>
+        <VisuallyHidden>Open menu</VisuallyHidden>
+      </MobileHeader>
 
       <MobileMenu
         isOpen={showMobileMenu}
@@ -40,12 +61,36 @@ const Header = () => {
   );
 };
 
-const MainHeader = styled.div`
+const DesktopHeader = styled.div`
   display: flex;
   align-items: baseline;
   padding: 18px 32px;
   height: 72px;
   border-bottom: 1px solid ${COLORS.gray[300]};
+
+  @media ${QUERIES.tabletAndSmaller} {
+    display: none;
+  }
+`;
+
+const MobileHeader = styled.div`
+  display: none;
+
+  @media ${QUERIES.tabletAndSmaller} {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+    align-items: center;
+    height: 72px;
+    border-bottom: 1px solid ${COLORS.gray[300]};
+    padding: 18px 32px;
+  }
+
+  @media ${QUERIES.phoneAndSmaller} {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 16px;
+  }
 `;
 
 const Nav = styled.nav`
@@ -68,6 +113,10 @@ const NavLink = styled.a`
   &:first-of-type {
     color: ${COLORS.secondary};
   }
+`;
+
+const LogoWrapper = styled.div`
+  margin-right: auto;
 `;
 
 export default Header;
